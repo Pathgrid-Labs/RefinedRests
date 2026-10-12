@@ -6,18 +6,16 @@ router.get("/", (req, res) => {
   const bathrooms = [
     {
       bathroomId: 101,
-      bathroomName: "Student Center - First Floor",
-      category: "Gender Neutral",
-      latitude: 39.7099,
-      longitude: -75.1181,
+      bathroomName: "Robinson Hall",
+      latitude: 39.71084367645474,
+      longitude: -75.12028505092695,
       address: "201 Mullica Hill Road",
-      description: "Single-person restroom near the main entrance.",
-      image: "images/student-center.jpg",
+      description: "Restrooms on floors 1, 2, and 3.",
+      image: "images/RobinsonHall.jpg",
 
       features: {
         accessible: true,
         changingTable: false,
-        genderNeutral: true
       },
 
       reviews: [
