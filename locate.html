@@ -36,15 +36,49 @@
 
         <h1>Refined Rests Reviewed Bathrooms</h1>
 
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d24556.661443720284!2d-75.11684821586913!3d39.704086071552304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1790560050408!5m2!1sen!2sus"
-            class="location-map"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+        <div id="map" class="location-map"></div>
 
     </main>
+
+    <script src="config.local.js"></script>
+
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 39.71084367645474, lng: -75.12028505092695 },
+                zoom: 17,
+                mapId: "DEMO_MAP_ID"
+            });
+
+            const restroomMarker = new google.maps.marker.AdvancedMarkerElement({
+                map: map,
+                position: {
+                    lat: 39.71084367645474,
+                    lng: -75.12028505092695
+                },
+                title: "Robinson Hall restrooms"
+            });
+
+            const restroomInfo = new google.maps.InfoWindow({
+                content: "<strong>Robinson Hall</strong><br>Restrooms on floors 1, 2, and 3."
+            });
+
+            restroomMarker.addListener("click", function () {
+                restroomInfo.open({
+                    map: map,
+                    anchor: restroomMarker
+                });
+            });
+        }
+
+        const mapsScript = document.createElement("script");
+        mapsScript.src =
+            "https://maps.googleapis.com/maps/api/js?key=" +
+            GOOGLE_MAPS_API_KEY +
+            "&loading=async&libraries=marker&callback=initMap";
+        mapsScript.async = true;
+        document.head.appendChild(mapsScript);
+    </script>
 
 </body>
 
