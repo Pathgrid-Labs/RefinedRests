@@ -112,3 +112,23 @@ body {
 h1 {
     text-align: center;
 }
+
+.half-star {
+    display: inline-block;
+    position: relative;
+}
+
+.half-star::before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    overflow: hidden;
+}
+
+/*about page styling*/
+.about-description {
+    text-align: center;
+    margin: 20px;
+}
