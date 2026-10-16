@@ -13,6 +13,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1, 2, and 3.",
       image: "images/RobinsonHall.jpg",
 
+      tags: ["Old","Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -22,22 +24,19 @@ router.get("/", (req, res) => {
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 4,
-          comment: "Very clean."
+          privacy: 4
         },
 
         {
           rating: 4,
           cleanliness: 4,
-          privacy: 5,
-          comment: "Good bathroom overall."
+          privacy: 5
         },
 
         {
           rating: 3,
           cleanliness: 3,
-          privacy: 4,
-          comment: "Smells a bit, but otherwise okay."
+          privacy: 4
         },
       ]
     },
@@ -51,6 +50,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1, 2, and 3.",
       image: "images/ScienceHall.jpg",
 
+      tags: ["Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -60,15 +61,13 @@ router.get("/", (req, res) => {
         {
           rating: 4,
           cleanliness: 4.5,
-          privacy: 5,
-          comment: "Clean and well-maintained."
+          privacy: 5
         },
 
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 5,
-          comment: "Best bathroom on campus!"
+          privacy: 5
         }
       ]
     },
@@ -82,6 +81,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1, 2, and 3.",
       image: "images/SavitzHall.jpg",
 
+      tags: ["Old", "Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -91,22 +92,19 @@ router.get("/", (req, res) => {
         {
           rating: 3,
           cleanliness: 2,
-          privacy: 3,
-          comment: "Needs improvement."
+          privacy: 3
         },
 
         {
           rating: 4,
           cleanliness: 4,
-          privacy: 5,
-          comment: "Good bathroom overall."
+          privacy: 5
         },
 
         {
           rating: 4,
           cleanliness: 3,
-          privacy: 5,
-          comment: "Gets the job done, but could be cleaner." 
+          privacy: 5
         }
       ]
     },
@@ -120,6 +118,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1, 2, and 3.",
       image: "images/BusinessHall.jpg",
 
+      tags: ["Modern","Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -129,22 +129,19 @@ router.get("/", (req, res) => {
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 5,
-          comment: "Excellent bathroom!"
+          privacy: 5
         },
 
         {
           rating: 4.5,
           cleanliness: 4,
-          privacy: 5,
-          comment: "Good bathroom overall but the trash can was full."
+          privacy: 5
         },
 
         {
           rating: 3,
           cleanliness: 3,
-          privacy: 5,
-          comment: "Toilet was clogged, but otherwise okay." 
+          privacy: 5
         }
       ]
     },
@@ -158,6 +155,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1, 2, and 3.",
       image: "images/HawthornHall.jpg",
 
+      tags: ["Old","Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -167,15 +166,13 @@ router.get("/", (req, res) => {
         {
           rating: 2,
           cleanliness: 1,
-          privacy: 3,
-          comment: "Could use some cleaning."
+          privacy: 3
         },
 
         {
           rating: 3.5,
           cleanliness: 3,
-          privacy: 5,
-          comment: "Floors were wet and slippery, but otherwise okay."
+          privacy: 5
         },
 
       ]
@@ -189,7 +186,8 @@ router.get("/", (req, res) => {
       address: "237 Mullica Hill Road, Glassboro, NJ 08028",
       description: "Restrooms on floors 1 and 2.",
       image: "images/WestbyHall.jpg",
-
+      
+      tags: ["Clean", "Accessible", "Urinals", "Stalls"],
       features: {
         accessible: true,
         changingTable: false,
@@ -199,22 +197,19 @@ router.get("/", (req, res) => {
         {
           rating: 3,
           cleanliness: 3,
-          privacy: 4,
-          comment: "Decent bathroom"
+          privacy: 4
         },
 
         {
           rating: 4,
           cleanliness: 3,
-          privacy: 5,
-          comment: "Not bad, but could be cleaner."
+          privacy: 5
         },
 
         {
           rating: 3,
           cleanliness: 3,
-          privacy: 4,
-          comment: "Not the best bathroom, but it works." 
+          privacy: 4
         }
       ]
     },
@@ -228,6 +223,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1, 2, and 3.",
       image: "images/JamesHall.jpg",
 
+      tags: ["Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -237,22 +234,19 @@ router.get("/", (req, res) => {
         {
           rating: 4.5,
           cleanliness: 4,
-          privacy: 4,
-          comment: "Good bathroom overall."
+          privacy: 4
         },
 
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 5,
-          comment: "Excellent bathroom!"
+          privacy: 5
         },
 
         {
           rating: 3.5,
           cleanliness: 4,
-          privacy: 4,
-          comment: "Not bad, but could be cleaner." 
+          privacy: 4
         }
       ]
     },
@@ -266,6 +260,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1 and 2, and 3.",
       image: "images/BunceHall.jpg",
 
+      tags: ["Old","Clean", "Accessible", "Urinals", "Stalls"],
+      
       features: {
         accessible: true,
         changingTable: false,
@@ -275,29 +271,25 @@ router.get("/", (req, res) => {
         {
           rating: 1,
           cleanliness: 2,
-          privacy: 3,
-          comment: "Needs maintenance and cleaning."
+          privacy: 3
         },
 
         {
           rating: 2,
           cleanliness: 1,
-          privacy: 2,
-          comment: "Worst bathroom on campus."
+          privacy: 2
         },
 
         {
           rating: 3,
           cleanliness: 3,
-          privacy: 4,
-          comment: "Not the best bathroom, but it works." 
+          privacy: 4
         },
 
         {
           rating: 3,
           cleanliness: 2,
-          privacy: 4,
-          comment: "very smelly and dirty, needs to be cleaned more often." 
+          privacy: 4
         }
       ]
     },
@@ -311,6 +303,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1 and 2, 3, 4, and 5.",
       image: "images/CampbellLibrary.jpg",
 
+      tags: ["Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -320,29 +314,25 @@ router.get("/", (req, res) => {
         {
           rating: 4,
           cleanliness: 5,
-          privacy: 4,
-          comment: "Good bathroom."
+          privacy: 4
         },
 
         {
           rating: 2,
           cleanliness: 2,
-          privacy: 4,
-          comment: "Needs more cleaning!!"
+          privacy: 4
         },
 
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 5,
-          comment: "No complaints, very clean."
+          privacy: 5
         },
 
         {
           rating: 4.5,
           cleanliness: 4,
-          privacy: 4,
-          comment: "Good bathroom overall."
+          privacy: 4
         },
 
       ]
@@ -357,6 +347,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1 and 2,3 and 4.",
       image: "images/DiscoveryHall.jpg",
 
+      tags: ["Modern", "Clean", "Accessible", "Urinals", "Stalls"],
+      
       features: {
         accessible: true,
         changingTable: false,
@@ -366,22 +358,19 @@ router.get("/", (req, res) => {
         {
           rating: 4.5,
           cleanliness: 4,
-          privacy: 5,
-          comment: "Cleanest bathroom on campus."
+          privacy: 5
         },
 
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 5,
-          comment: "Excellent bathroom!"
+          privacy: 5
         },
 
         {
           rating: 4,
           cleanliness: 4,
-          privacy: 4,
-          comment: "The water was not working properly." 
+          privacy: 4
         }
       ]
     },
@@ -395,6 +384,8 @@ router.get("/", (req, res) => {
       description: "Restrooms on floors 1 and 2 and 3.",
       image: "images/ChamberlainStudentCenter.jpg",
 
+      tags: ["Clean", "Accessible", "Urinals", "Stalls"],
+
       features: {
         accessible: true,
         changingTable: false,
@@ -404,22 +395,19 @@ router.get("/", (req, res) => {
         {
           rating: 4.5,
           cleanliness: 4,
-          privacy: 5,
-          comment: "Cleanest bathroom on campus."
+          privacy: 5
         },
 
         {
           rating: 5,
           cleanliness: 5,
-          privacy: 5,
-          comment: "Excellent bathroom!"
+          privacy: 5
         },
 
         {
           rating: 4,
           cleanliness: 4,
-          privacy: 4,
-          comment: "The water was not working properly." 
+          privacy: 4
         }
       ]
     },
