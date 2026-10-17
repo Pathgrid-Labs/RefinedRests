@@ -132,3 +132,95 @@ h1 {
     text-align: center;
     margin: 20px;
 }
+
+/* Home page sidebar and map layout */
+.restroom-layout {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    min-height: 650px;
+}
+
+.restroom-sidebar {
+    padding: 24px;
+    border-right: 1px solid #DDD5CA;
+}
+
+.restroom-sidebar h1 {
+    text-align: left;
+    font-family: Georgia, serif;
+    font-size: 28px;
+    color: #5C4636;
+    margin-bottom: 12px;
+}
+
+.restroom-sidebar p {
+    color: #5C4636;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.map-panel {
+    min-width: 0;
+}
+
+/* Override the old map sizing on the Home page */
+.map-panel .location-map {
+    max-width: none;
+    height: 100%;
+    min-height: 650px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Stack the sidebar and map on smaller screens */
+@media (max-width: 750px) {
+    .restroom-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .restroom-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #DDD5CA;
+    }
+
+    .map-panel .location-map {
+        height: 450px;
+        min-height: 450px;
+    }
+}
+
+/* Restroom list cards */
+.restroom-card {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid #DDD5CA;
+    border-radius: 8px;
+    background: white;
+    color: #5C4636;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+.restroom-card strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.restroom-card span {
+    display: block;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.restroom-card:hover {
+    background: #F7F3ED;
+}
+
+.restroom-card:focus-visible {
+    outline: 3px solid #8A6200;
+    outline-offset: 2px;
+}
