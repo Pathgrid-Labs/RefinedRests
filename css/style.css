@@ -87,26 +87,11 @@ body {
 
 }
 
-.locate-section h1 {
-    font-family: Georgia, serif;
-    color: #5C4636;
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
 .location-map {
     display: block;
-
     width: 100%;
-    max-width: 1100px;
-    height: 550px;
-
-    margin: 0 auto;
-
-    border: none;
-    border-radius: 12px;
-
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    height: 100%;
+    min-height: 0;
 }
 
 h1 {
@@ -185,15 +170,6 @@ h1 {
     min-height: 0;
 }
 
-/* Override the old map sizing on the Home page */
-.map-panel .location-map {
-    max-width: none;
-    height: 100%;
-    min-height: 0;
-    border-radius: 0;
-    box-shadow: none;
-}
-
 /* Stack the sidebar and map on smaller screens */
 @media (max-width: 750px) {
     .home-page {
@@ -213,7 +189,7 @@ h1 {
         border-bottom: 1px solid #DDD5CA;
     }
 
-    .map-panel .location-map {
+    .location-map {
         height: 450px;
         min-height: 450px;
     }

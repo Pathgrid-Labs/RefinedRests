@@ -5,8 +5,9 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const bathrooms = await getDB()
-      .collection("bathrooms")
+    const database = getDB();
+    const collection = database.collection("bathrooms");
+    const bathrooms = await collection
       .find({}, { projection: { _id: 0 } })
       .sort({ bathroomId: 1 })
       .toArray();

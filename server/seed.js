@@ -14,17 +14,20 @@ async function seed() {
 
     await collection.createIndex({ bathroomId: 1 }, { unique: true });
 
-    const result = await collection.bulkWrite(
-      bathrooms.map((bathroom) => ({
-        updateOne: {
-          filter: { bathroomId: bathroom.bathroomId },
-          update: { $setOnInsert: bathroom },
-          upsert: true,
-        },
-      }))
-    );
+    let insertedCount = 0;
 
-    console.log(`Inserted ${result.upsertedCount} restrooms.`);
+    for (const bathroom of bathrooms) {
+      const existingBathroom = await collection.findOne({
+        bathroomId: bathroom.bathroomId
+      });
+
+      if (!existingBathroom) {
+        await collection.insertOne(bathroom);
+        insertedCount = insertedCount + 1;
+      }
+    }
+
+    console.log("Inserted " + insertedCount + " restrooms.");
   } finally {
     await client.close();
   }
