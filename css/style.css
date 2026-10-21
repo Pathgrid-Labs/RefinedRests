@@ -216,10 +216,28 @@ h1 {
     font-size: 18px;
 }
 
-.restroom-card span {
+.restroom-card > span:not(.restroom-flairs) {
     display: block;
     font-size: 14px;
     line-height: 1.5;
+}
+
+.restroom-flairs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.restroom-flair {
+    padding: 3px 9px;
+    border: 1px solid #DDD5CA;
+    border-radius: 999px;
+    background: #F7F3ED;
+    font-size: 12px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    max-width: 100%;
 }
 
 .restroom-card:hover {

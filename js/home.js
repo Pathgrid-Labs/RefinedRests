@@ -35,6 +35,7 @@ async function initMap() {
         cardAddress.textContent = bathroom.address;
 
         card.append(cardName, cardAddress);
+
         restroomList.appendChild(card);
 
         const restroomMarker = new google.maps.marker.AdvancedMarkerElement({
@@ -100,6 +101,21 @@ async function initMap() {
 
         const popupContent = document.createElement("div");
         popupContent.append(descriptionElement, ratingElement);
+
+        if (Array.isArray(bathroom.tags) && bathroom.tags.length > 0) {
+            const flairs = document.createElement("span");
+            flairs.className = "restroom-flairs";
+
+            for (const tag of bathroom.tags) {
+                const flair = document.createElement("span");
+                flair.className = "restroom-flair";
+                flair.textContent = tag;
+                flairs.appendChild(flair);
+            }
+
+            popupContent.appendChild(flairs);
+            card.appendChild(flairs.cloneNode(true));
+        }
 
 
         const restroomInfo = new google.maps.InfoWindow({
