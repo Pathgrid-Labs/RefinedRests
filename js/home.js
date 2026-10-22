@@ -22,6 +22,9 @@ async function initMap() {
     restroomList.replaceChildren();
 
     let openRestroomInfo = null;
+    const sidebarSearch = document.getElementById("sidebar-search");
+    const mapSearch = document.getElementById("map-search");
+    const searchableRestrooms = [];
 
     for (const bathroom of bathrooms) {
         const card = document.createElement("button");
@@ -141,6 +144,15 @@ async function initMap() {
 
         restroomMarker.addListener("click", selectRestroom);
         card.addEventListener("click", selectRestroom);
+        searchableRestrooms.push({
+            card,
+            marker: restroomMarker,
+            searchText: [
+                bathroom.bathroomName,
+                bathroom.address,
+                ...(bathroom.tags || [])
+            ].join(" ").toLowerCase()
+        });
     }
 }
 
