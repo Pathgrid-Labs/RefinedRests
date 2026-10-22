@@ -154,6 +154,33 @@ async function initMap() {
             ].join(" ").toLowerCase()
         });
     }
+
+    function filterRestrooms(value) {
+        const query = value.trim().toLowerCase();
+
+        sidebarSearch.value = value;
+        mapSearch.value = value;
+
+        if (openRestroomInfo) {
+            openRestroomInfo.close();
+            openRestroomInfo = null;
+        }
+
+        for (const restroom of searchableRestrooms) {
+            const matches = restroom.searchText.includes(query);
+
+            restroom.card.style.display = matches ? "" : "none";
+            restroom.marker.map = matches ? map : null;
+        }
+    }
+
+    sidebarSearch.addEventListener("input", () => {
+        filterRestrooms(sidebarSearch.value);
+    });
+
+    mapSearch.addEventListener("input", () => {
+        filterRestrooms(mapSearch.value);
+    });
 }
 
 const mapsScript = document.createElement("script");
