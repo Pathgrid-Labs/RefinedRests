@@ -22,6 +22,9 @@ async function initMap() {
     restroomList.replaceChildren();
 
     let openRestroomInfo = null;
+    const sidebarSearch = document.getElementById("sidebar-search");
+    const mapSearch = document.getElementById("map-search");
+    const searchableRestrooms = [];
 
     for (const bathroom of bathrooms) {
         const card = document.createElement("button");
@@ -141,7 +144,43 @@ async function initMap() {
 
         restroomMarker.addListener("click", selectRestroom);
         card.addEventListener("click", selectRestroom);
+        searchableRestrooms.push({
+            card,
+            marker: restroomMarker,
+            searchText: [
+                bathroom.bathroomName,
+                bathroom.address,
+                ...(bathroom.tags || [])
+            ].join(" ").toLowerCase()
+        });
     }
+
+    function filterRestrooms(value) {
+        const query = value.trim().toLowerCase();
+
+        sidebarSearch.value = value;
+        mapSearch.value = value;
+
+        if (openRestroomInfo) {
+            openRestroomInfo.close();
+            openRestroomInfo = null;
+        }
+
+        for (const restroom of searchableRestrooms) {
+            const matches = restroom.searchText.includes(query);
+
+            restroom.card.style.display = matches ? "" : "none";
+            restroom.marker.map = matches ? map : null;
+        }
+    }
+
+    sidebarSearch.addEventListener("input", () => {
+        filterRestrooms(sidebarSearch.value);
+    });
+
+    mapSearch.addEventListener("input", () => {
+        filterRestrooms(mapSearch.value);
+    });
 }
 
 const mapsScript = document.createElement("script");
