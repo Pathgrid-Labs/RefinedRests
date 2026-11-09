@@ -244,6 +244,32 @@ h1 {
     background: #F7F3ED;
 }
 
+.restroom-rating {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.rating-icons {
+    display: inline-flex;
+    gap: 4px;
+    vertical-align: middle;
+}
+
+.rating-icon {
+    display: inline-grid;
+}
+
+.rating-icons img {
+    grid-area: 1 / 1;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.rating-icon-outline {
+    filter: brightness(0.7);
+}
+
 .restroom-card.selected {
     background: #EFE3CA;
     border-color: #8A6200;
