@@ -1,4 +1,4 @@
-function createReviewForm() {
+function createReviewForm(bathroomId, onSaved) {
     const form = document.createElement("form");
     form.className = "review-form";
 
@@ -64,18 +64,67 @@ function createReviewForm() {
 
     const message = document.createElement("p");
     message.setAttribute("role", "status");
-    message.textContent = "Review saving is not connected yet.";
 
     const actions = document.createElement("div");
     actions.className = "review-actions";
     const submit = document.createElement("button");
     submit.type = "submit";
     submit.textContent = "Submit review";
-    submit.disabled = true;
     actions.appendChild(submit);
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
+
+        if (submit.disabled) {
+            return;
+        }
+
+        const selectedRating = form.querySelector('input[name="rating"]:checked');
+        if (!selectedRating) {
+            message.textContent = "Choose a rating from 1 to 5.";
+            return;
+        }
+
+        const rating = Number(selectedRating.value);
+        const tags = [];
+        const selectedTags = form.querySelectorAll('input[name="tags"]:checked');
+        for (const tag of selectedTags) {
+            tags.push(tag.value);
+        }
+
+        submit.disabled = true;
+        ratingGroup.disabled = true;
+        tagGroup.disabled = true;
+        message.textContent = "Saving your review…";
+
+        let bathroom;
+
+        try {
+            const response = await fetch(
+                "http://localhost:3001/api/bathrooms/" + bathroomId + "/reviews",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ rating: rating, tags: tags })
+                }
+            );
+
+            if (!response.ok) {
+                message.textContent = "Could not save your review. Please try again.";
+                return;
+            }
+
+            bathroom = await response.json();
+        } catch {
+            message.textContent = "Could not save your review. Check your connection and try again.";
+            return;
+        } finally {
+            submit.disabled = false;
+            ratingGroup.disabled = false;
+            tagGroup.disabled = false;
+        }
+
+        onSaved(bathroom);
     });
 
     form.append(ratingGroup, tagGroup, message, actions);

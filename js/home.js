@@ -80,7 +80,7 @@ function createRatingDisplay(reviews) {
     const scoreElement = document.createElement("span");
     scoreElement.textContent =
         " " + averageRating.toFixed(1) +
-        "/5 (" + reviewCount + " sample ratings)";
+        "/5 (" + reviewCount + " ratings)";
 
     ratingElement.append(iconsElement, scoreElement);
     return ratingElement;
@@ -235,7 +235,18 @@ async function initMap() {
             title.textContent = "Review " + bathroom.bathroomName;
             header.append(back, title);
 
-            const form = createReviewForm();
+            const form = createReviewForm(bathroom.bathroomId, function (updatedBathroom) {
+                bathroom.reviews = updatedBathroom.reviews;
+
+                if (info.getContent() === form) {
+                    showDetails();
+                    const message = document.createElement("p");
+                    message.setAttribute("role", "status");
+                    message.textContent = "Your review was saved.";
+                    info.getContent().appendChild(message);
+                    info.getContent().querySelector("button").focus();
+                }
+            });
             info.setHeaderContent(header);
             info.setContent(form);
             back.focus();
