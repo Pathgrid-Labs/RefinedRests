@@ -166,6 +166,7 @@ async function initMap() {
         restroom.card.classList.remove("selected");
         restroom.card.setAttribute("aria-pressed", "false");
         restroom.info.close();
+        restroom.showDetails();
     }
 
     function selectRestroom(restroom) {
@@ -208,6 +209,40 @@ async function initMap() {
             content: createPopupContent(bathroom)
         });
 
+        function showDetails() {
+            const content = createPopupContent(bathroom);
+            const reviewButton = document.createElement("button");
+            reviewButton.type = "button";
+            reviewButton.className = "leave-review-button";
+            reviewButton.textContent = "Leave a review";
+            reviewButton.addEventListener("click", showReview);
+            content.appendChild(reviewButton);
+            info.setHeaderContent(bathroom.bathroomName);
+            info.setContent(content);
+        }
+
+        function showReview() {
+            const header = document.createElement("div");
+            header.className = "review-popup-header";
+            const back = document.createElement("button");
+            back.type = "button";
+            back.textContent = "← Back";
+            back.addEventListener("click", function () {
+                showDetails();
+                info.getContent().querySelector("button").focus();
+            });
+            const title = document.createElement("strong");
+            title.textContent = "Review " + bathroom.bathroomName;
+            header.append(back, title);
+
+            const form = createReviewForm();
+            info.setHeaderContent(header);
+            info.setContent(form);
+            back.focus();
+        }
+
+        showDetails();
+
         let searchText = bathroom.bathroomName + " " + bathroom.address;
         for (const tag of bathroom.tags || []) {
             searchText += " " + tag;
@@ -217,6 +252,7 @@ async function initMap() {
             card: card,
             marker: marker,
             info: info,
+            showDetails: showDetails,
             searchText: searchText.toLowerCase()
         };
 
