@@ -1,16 +1,120 @@
-async function initMap() {
-
-    //fetch bathroom data from the backend api
+﻿async function loadBathrooms() {
     const response = await fetch("http://localhost:3001/api/bathrooms");
 
     if (!response.ok) {
         throw new Error("Could not load restrooms.");
     }
 
-    const bathrooms = await response.json();
+    return await response.json();
+}
 
+function createFlairs(tags) {
+    if (!Array.isArray(tags) || tags.length === 0) {
+        return null;
+    }
 
-    // Create one map shared by all restroom markers.
+    const flairs = document.createElement("span");
+    flairs.className = "restroom-flairs";
+
+    for (const tag of tags) {
+        const flair = document.createElement("span");
+        flair.className = "restroom-flair";
+        flair.textContent = tag;
+        flairs.appendChild(flair);
+    }
+
+    return flairs;
+}
+
+function createRatingDisplay(reviews) {
+    const ratingElement = document.createElement("p");
+    const reviewCount = reviews.length;
+
+    if (reviewCount === 0) {
+        ratingElement.textContent = "No ratings yet.";
+        return ratingElement;
+    }
+
+    let totalRating = 0;
+
+    for (const review of reviews) {
+        totalRating += review.rating;
+    }
+
+    const averageRating = totalRating / reviewCount;
+    const roundedRating = Math.round(averageRating * 2) / 2;
+    const fullStarCount = Math.floor(roundedRating);
+    const hasHalfStar = roundedRating % 1 !== 0;
+
+    const starsElement = document.createElement("span");
+    starsElement.style.color = "#8A6200";
+    starsElement.style.fontSize = "22px";
+    starsElement.setAttribute("aria-hidden", "true");
+
+    for (let position = 1; position <= 5; position++) {
+        const star = document.createElement("span");
+
+        if (position <= fullStarCount) {
+            star.textContent = "★";
+        } else if (position === fullStarCount + 1 && hasHalfStar) {
+            star.className = "half-star";
+            star.textContent = "☆";
+        } else {
+            star.textContent = "☆";
+        }
+
+        starsElement.appendChild(star);
+    }
+
+    const scoreElement = document.createElement("span");
+    scoreElement.textContent =
+        " " + averageRating.toFixed(1) +
+        "/5 (" + reviewCount + " sample ratings)";
+
+    ratingElement.append(starsElement, scoreElement);
+    return ratingElement;
+}
+
+function createRestroomCard(bathroom) {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "restroom-card";
+
+    const cardName = document.createElement("strong");
+    cardName.textContent = bathroom.bathroomName;
+
+    const cardAddress = document.createElement("span");
+    cardAddress.textContent = bathroom.address;
+
+    card.append(cardName, cardAddress);
+
+    const flairs = createFlairs(bathroom.tags);
+    if (flairs) {
+        card.appendChild(flairs);
+    }
+
+    return card;
+}
+
+function createPopupContent(bathroom) {
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = bathroom.description;
+
+    const ratingElement = createRatingDisplay(bathroom.reviews);
+    const popupContent = document.createElement("div");
+    popupContent.append(descriptionElement, ratingElement);
+
+    const flairs = createFlairs(bathroom.tags);
+    if (flairs) {
+        popupContent.appendChild(flairs);
+    }
+
+    return popupContent;
+}
+
+async function initMap() {
+    const bathrooms = await loadBathrooms();
+
     const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 39.71084367645474, lng: -75.12028505092695 },
         zoom: 17,
@@ -18,30 +122,33 @@ async function initMap() {
     });
 
     const restroomList = document.getElementById("restroom-list");
-
-    restroomList.replaceChildren();
-
-    let openRestroomInfo = null;
     const sidebarSearch = document.getElementById("sidebar-search");
     const mapSearch = document.getElementById("map-search");
     const searchableRestrooms = [];
+    let openRestroomInfo = null;
 
-    for (const bathroom of bathrooms) {
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "restroom-card";
+    restroomList.replaceChildren();
 
-        const cardName = document.createElement("strong");
-        cardName.textContent = bathroom.bathroomName;
+    function selectRestroom(restroom) {
+        if (openRestroomInfo) {
+            openRestroomInfo.close();
+        }
 
-        const cardAddress = document.createElement("span");
-        cardAddress.textContent = bathroom.address;
+        map.panTo(restroom.marker.position);
 
-        card.append(cardName, cardAddress);
+        restroom.info.open({
+            map: map,
+            anchor: restroom.marker
+        });
 
+        openRestroomInfo = restroom.info;
+    }
+
+    function addRestroom(bathroom) {
+        const card = createRestroomCard(bathroom);
         restroomList.appendChild(card);
 
-        const restroomMarker = new google.maps.marker.AdvancedMarkerElement({
+        const marker = new google.maps.marker.AdvancedMarkerElement({
             map: map,
             position: {
                 lat: bathroom.latitude,
@@ -50,110 +157,32 @@ async function initMap() {
             title: bathroom.bathroomName
         });
 
-        const descriptionElement = document.createElement("p");
-        descriptionElement.textContent = bathroom.description;
-
-
-        //rating element -------------------------------------------------------------------------------------------------------------------------
-        const ratingElement = document.createElement("p");
-        const reviewCount = bathroom.reviews.length;
-
-        if (reviewCount === 0) {
-            ratingElement.textContent = "No ratings yet.";
-        }
-        else {
-            let totalRating = 0;
-
-            for (const review of bathroom.reviews) {
-                totalRating += review.rating;
-            }
-
-            const averageRating = totalRating / reviewCount;
-            const roundedRating = Math.round(averageRating * 2) / 2;
-            const fullStarCount = Math.floor(roundedRating);
-            const hasHalfStar = roundedRating % 1 !== 0;
-
-            const starsElement = document.createElement("span");
-            starsElement.style.color = "#8A6200";
-            starsElement.style.fontSize = "22px";
-            starsElement.setAttribute("aria-hidden", "true");
-
-            for (let position = 1; position <= 5; position++) {
-                const star = document.createElement("span");
-
-                if (position <= fullStarCount) {
-                    star.textContent = "★";
-                } else if (position === fullStarCount + 1 && hasHalfStar) {
-                    star.className = "half-star";
-                    star.textContent = "☆";
-                } else {
-                    star.textContent = "☆";
-                }
-
-                starsElement.appendChild(star);
-            }
-
-            //add the numeric rating to the right of the stars
-            const scoreElement = document.createElement("span");
-            scoreElement.textContent =
-                " " + averageRating.toFixed(1) +
-                "/5 (" + reviewCount + " sample ratings)";
-
-            ratingElement.append(starsElement, scoreElement);
-        }
-
-        const popupContent = document.createElement("div");
-        popupContent.append(descriptionElement, ratingElement);
-
-        if (Array.isArray(bathroom.tags) && bathroom.tags.length > 0) {
-            const flairs = document.createElement("span");
-            flairs.className = "restroom-flairs";
-
-            for (const tag of bathroom.tags) {
-                const flair = document.createElement("span");
-                flair.className = "restroom-flair";
-                flair.textContent = tag;
-                flairs.appendChild(flair);
-            }
-
-            popupContent.appendChild(flairs);
-            card.appendChild(flairs.cloneNode(true));
-        }
-
-
-        const restroomInfo = new google.maps.InfoWindow({
+        const info = new google.maps.InfoWindow({
             headerContent: bathroom.bathroomName,
-            content: popupContent
+            content: createPopupContent(bathroom)
         });
 
-        // Cards and markers share the same selection behavior.
-        function selectRestroom() {
-            if (openRestroomInfo) {
-                openRestroomInfo.close();
-            }
-
-            map.panTo(restroomMarker.position);
-
-            restroomInfo.open({
-                map: map,
-                anchor: restroomMarker
-            });
-
-            openRestroomInfo = restroomInfo;
+        let searchText = bathroom.bathroomName + " " + bathroom.address;
+        for (const tag of bathroom.tags || []) {
+            searchText += " " + tag;
         }
 
-        restroomMarker.addListener("click", selectRestroom);
-        card.addEventListener("click", selectRestroom);
-        searchableRestrooms.push({
-            card,
-            marker: restroomMarker,
-            info: restroomInfo,
-            searchText: [
-                bathroom.bathroomName,
-                bathroom.address,
-                ...(bathroom.tags || [])
-            ].join(" ").toLowerCase()
+        const restroom = {
+            card: card,
+            marker: marker,
+            info: info,
+            searchText: searchText.toLowerCase()
+        };
+
+        marker.addListener("click", function () {
+            selectRestroom(restroom);
         });
+
+        card.addEventListener("click", function () {
+            selectRestroom(restroom);
+        });
+
+        searchableRestrooms.push(restroom);
     }
 
     function updateVisibleMarkers() {
@@ -195,22 +224,30 @@ async function initMap() {
         updateVisibleMarkers();
     }
 
+    for (const bathroom of bathrooms) {
+        addRestroom(bathroom);
+    }
+
     map.addListener("idle", updateVisibleMarkers);
     updateVisibleMarkers();
 
-    sidebarSearch.addEventListener("input", () => {
+    sidebarSearch.addEventListener("input", function () {
         filterRestrooms(sidebarSearch.value);
     });
 
-    mapSearch.addEventListener("input", () => {
+    mapSearch.addEventListener("input", function () {
         filterRestrooms(mapSearch.value);
     });
 }
 
-const mapsScript = document.createElement("script");
-mapsScript.src =
-    "https://maps.googleapis.com/maps/api/js?key=" +
-    GOOGLE_MAPS_API_KEY +
-    "&loading=async&libraries=marker&callback=initMap";
-mapsScript.async = true;
-document.head.appendChild(mapsScript);
+function loadGoogleMaps() {
+    const mapsScript = document.createElement("script");
+    mapsScript.src =
+        "https://maps.googleapis.com/maps/api/js?key=" +
+        GOOGLE_MAPS_API_KEY +
+        "&loading=async&libraries=marker&callback=initMap";
+    mapsScript.async = true;
+    document.head.appendChild(mapsScript);
+}
+
+loadGoogleMaps();
