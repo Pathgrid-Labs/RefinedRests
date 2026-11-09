@@ -147,6 +147,7 @@ async function initMap() {
         searchableRestrooms.push({
             card,
             marker: restroomMarker,
+            info: restroomInfo,
             searchText: [
                 bathroom.bathroomName,
                 bathroom.address,
@@ -155,9 +156,34 @@ async function initMap() {
         });
     }
 
-    function filterRestrooms(value) {
-        const query = value.trim().toLowerCase();
+    function updateVisibleMarkers() {
+        const bounds = map.getBounds();
 
+        if (!bounds) {
+            return;
+        }
+
+        const query = sidebarSearch.value.trim().toLowerCase();
+
+        for (const restroom of searchableRestrooms) {
+            const matchesSearch = restroom.searchText.includes(query);
+            const isInMap = bounds.contains(restroom.marker.position);
+
+            if (matchesSearch && isInMap) {
+                restroom.marker.map = map;
+                restroom.card.style.display = "";
+            } else {
+                restroom.info.close();
+                if (openRestroomInfo === restroom.info) {
+                    openRestroomInfo = null;
+                }
+                restroom.marker.map = null;
+                restroom.card.style.display = "none";
+            }
+        }
+    }
+
+    function filterRestrooms(value) {
         sidebarSearch.value = value;
         mapSearch.value = value;
 
@@ -166,13 +192,11 @@ async function initMap() {
             openRestroomInfo = null;
         }
 
-        for (const restroom of searchableRestrooms) {
-            const matches = restroom.searchText.includes(query);
-
-            restroom.card.style.display = matches ? "" : "none";
-            restroom.marker.map = matches ? map : null;
-        }
+        updateVisibleMarkers();
     }
+
+    map.addListener("idle", updateVisibleMarkers);
+    updateVisibleMarkers();
 
     sidebarSearch.addEventListener("input", () => {
         filterRestrooms(sidebarSearch.value);
