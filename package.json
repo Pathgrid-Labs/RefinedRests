@@ -1,0 +1,15 @@
+
+{
+  "name": "refinedrests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --prefix server",
+    "dev:frontend": "http-server . -p 5500 -c-1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "http-server": "^14.1.1"
+  }
+}
