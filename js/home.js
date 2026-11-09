@@ -125,23 +125,58 @@ async function initMap() {
     const sidebarSearch = document.getElementById("sidebar-search");
     const mapSearch = document.getElementById("map-search");
     const searchableRestrooms = [];
-    let openRestroomInfo = null;
+    let selectedRestroom = null;
 
     restroomList.replaceChildren();
 
-    function selectRestroom(restroom) {
-        if (openRestroomInfo) {
-            openRestroomInfo.close();
+    function showSelectedCard() {
+        if (!selectedRestroom) {
+            return;
         }
+
+        const cardBounds = selectedRestroom.card.getBoundingClientRect();
+        const listBounds = restroomList.getBoundingClientRect();
+
+        if (cardBounds.top < listBounds.top) {
+            restroomList.scrollTop += cardBounds.top - listBounds.top;
+        } else if (cardBounds.bottom > listBounds.bottom) {
+            restroomList.scrollTop += cardBounds.bottom - listBounds.bottom;
+        }
+    }
+
+    function clearSelection() {
+        if (!selectedRestroom) {
+            return;
+        }
+
+        const restroom = selectedRestroom;
+        selectedRestroom = null;
+
+        restroom.card.classList.remove("selected");
+        restroom.card.setAttribute("aria-pressed", "false");
+        restroom.info.close();
+    }
+
+    function selectRestroom(restroom) {
+        if (selectedRestroom === restroom) {
+            return;
+        }
+
+        clearSelection();
+
+        selectedRestroom = restroom;
+        restroom.card.classList.add("selected");
+        restroom.card.setAttribute("aria-pressed", "true");
 
         map.panTo(restroom.marker.position);
 
         restroom.info.open({
             map: map,
-            anchor: restroom.marker
+            anchor: restroom.marker,
+            shouldFocus: false
         });
 
-        openRestroomInfo = restroom.info;
+        showSelectedCard();
     }
 
     function addRestroom(bathroom) {
@@ -174,11 +209,24 @@ async function initMap() {
             searchText: searchText.toLowerCase()
         };
 
+        card.setAttribute("aria-pressed", "false");
+
+        info.addListener("closeclick", function () {
+            if (selectedRestroom === restroom) {
+                clearSelection();
+            }
+        });
+
         marker.addListener("click", function () {
             selectRestroom(restroom);
         });
 
         card.addEventListener("click", function () {
+            if (selectedRestroom === restroom) {
+                clearSelection();
+                return;
+            }
+
             selectRestroom(restroom);
         });
 
@@ -199,27 +247,29 @@ async function initMap() {
             const isInMap = bounds.contains(restroom.marker.position);
 
             if (matchesSearch && isInMap) {
-                restroom.marker.map = map;
+                if (restroom.marker.map !== map) {
+                    restroom.marker.map = map;
+                }
                 restroom.card.style.display = "";
             } else {
-                restroom.info.close();
-                if (openRestroomInfo === restroom.info) {
-                    openRestroomInfo = null;
+                if (selectedRestroom === restroom) {
+                    clearSelection();
                 }
-                restroom.marker.map = null;
+                if (restroom.marker.map) {
+                    restroom.marker.map = null;
+                }
                 restroom.card.style.display = "none";
             }
         }
+
+        showSelectedCard();
     }
 
     function filterRestrooms(value) {
         sidebarSearch.value = value;
         mapSearch.value = value;
 
-        if (openRestroomInfo) {
-            openRestroomInfo.close();
-            openRestroomInfo = null;
-        }
+        clearSelection();
 
         updateVisibleMarkers();
     }

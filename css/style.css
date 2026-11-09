@@ -244,6 +244,11 @@ h1 {
     background: #F7F3ED;
 }
 
+.restroom-card.selected {
+    background: #EFE3CA;
+    border-color: #8A6200;
+}
+
 .restroom-card:focus-visible {
     outline: 3px solid #8A6200;
     outline-offset: 2px;
