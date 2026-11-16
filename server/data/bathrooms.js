@@ -10,28 +10,20 @@ const bathrooms = [
 
       tags: ["Old","Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 4
+          tags: []
         },
 
         {
           rating: 4,
-          cleanliness: 4,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 3,
-          cleanliness: 3,
-          privacy: 4
+          tags: []
         },
       ]
     },
@@ -47,22 +39,15 @@ const bathrooms = [
 
       tags: ["Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 4,
-          cleanliness: 4.5,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 5
+          tags: []
         }
       ]
     },
@@ -78,28 +63,20 @@ const bathrooms = [
 
       tags: ["Old", "Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 3,
-          cleanliness: 2,
-          privacy: 3
+          tags: []
         },
 
         {
           rating: 4,
-          cleanliness: 4,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 4,
-          cleanliness: 3,
-          privacy: 5
+          tags: []
         }
       ]
     },
@@ -115,28 +92,20 @@ const bathrooms = [
 
       tags: ["Modern","Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 4.5,
-          cleanliness: 4,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 3,
-          cleanliness: 3,
-          privacy: 5
+          tags: []
         }
       ]
     },
@@ -152,22 +121,15 @@ const bathrooms = [
 
       tags: ["Old","Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 2,
-          cleanliness: 1,
-          privacy: 3
+          tags: []
         },
 
         {
           rating: 3.5,
-          cleanliness: 3,
-          privacy: 5
+          tags: []
         },
 
       ]
@@ -183,28 +145,20 @@ const bathrooms = [
       image: "images/WestbyHall.jpg",
       
       tags: ["Clean", "Accessible", "Urinals", "Stalls"],
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 3,
-          cleanliness: 3,
-          privacy: 4
+          tags: []
         },
 
         {
           rating: 4,
-          cleanliness: 3,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 3,
-          cleanliness: 3,
-          privacy: 4
+          tags: []
         }
       ]
     },
@@ -220,28 +174,20 @@ const bathrooms = [
 
       tags: ["Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 4.5,
-          cleanliness: 4,
-          privacy: 4
+          tags: []
         },
 
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 3.5,
-          cleanliness: 4,
-          privacy: 4
+          tags: []
         }
       ]
     },
@@ -257,34 +203,25 @@ const bathrooms = [
 
       tags: ["Old","Clean", "Accessible", "Urinals", "Stalls"],
       
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 1,
-          cleanliness: 2,
-          privacy: 3
+          tags: []
         },
 
         {
           rating: 2,
-          cleanliness: 1,
-          privacy: 2
+          tags: []
         },
 
         {
           rating: 3,
-          cleanliness: 3,
-          privacy: 4
+          tags: []
         },
 
         {
           rating: 3,
-          cleanliness: 2,
-          privacy: 4
+          tags: []
         }
       ]
     },
@@ -300,34 +237,25 @@ const bathrooms = [
 
       tags: ["Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 4,
-          cleanliness: 5,
-          privacy: 4
+          tags: []
         },
 
         {
           rating: 2,
-          cleanliness: 2,
-          privacy: 4
+          tags: []
         },
 
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 4.5,
-          cleanliness: 4,
-          privacy: 4
+          tags: []
         },
 
       ]
@@ -344,28 +272,20 @@ const bathrooms = [
 
       tags: ["Modern", "Clean", "Accessible", "Urinals", "Stalls"],
       
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 4.5,
-          cleanliness: 4,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 4,
-          cleanliness: 4,
-          privacy: 4
+          tags: []
         }
       ]
     },
@@ -381,28 +301,20 @@ const bathrooms = [
 
       tags: ["Clean", "Accessible", "Urinals", "Stalls"],
 
-      features: {
-        accessible: true,
-        changingTable: false,
-      },
-
       reviews: [
         {
           rating: 4.5,
-          cleanliness: 4,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 5,
-          cleanliness: 5,
-          privacy: 5
+          tags: []
         },
 
         {
           rating: 4,
-          cleanliness: 4,
-          privacy: 4
+          tags: []
         }
       ]
     },

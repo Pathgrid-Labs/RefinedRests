@@ -98,14 +98,46 @@ function createRestroomCard(bathroom) {
 }
 
 function createPopupContent(bathroom) {
+    const addressElement = document.createElement("p");
+    addressElement.textContent = bathroom.address;
+
     const descriptionElement = document.createElement("p");
     descriptionElement.textContent = bathroom.description;
 
     const ratingElement = createRatingDisplay(bathroom.reviews);
     const popupContent = document.createElement("div");
-    popupContent.append(descriptionElement, ratingElement);
+    popupContent.append(addressElement, descriptionElement, ratingElement);
 
-    const flairs = createFlairs(bathroom.tags);
+    const directionsLink = document.createElement("a");
+    directionsLink.textContent = "Get directions";
+    directionsLink.href =
+        "https://www.google.com/maps/dir/?api=1&destination=" +
+        bathroom.latitude + "%2C" + bathroom.longitude;
+    directionsLink.target = "_blank";
+    directionsLink.rel = "noopener noreferrer";
+
+    const directionsElement = document.createElement("p");
+    directionsElement.appendChild(directionsLink);
+    popupContent.appendChild(directionsElement);
+
+    const tags = [];
+    for (const tag of bathroom.tags || []) {
+        tags.push(tag);
+    }
+
+    for (const review of bathroom.reviews) {
+        if (!Array.isArray(review.tags)) {
+            continue;
+        }
+
+        for (const tag of review.tags) {
+            if (!tags.includes(tag)) {
+                tags.push(tag);
+            }
+        }
+    }
+
+    const flairs = createFlairs(tags);
     if (flairs) {
         popupContent.appendChild(flairs);
     }
