@@ -120,6 +120,8 @@
                     message.textContent = "Your review was saved.";
                     info.getContent().appendChild(message);
                     info.getContent().querySelector("button").focus();
+                } else if (info.getContent().tagName !== "FORM") {
+                    showDetails();
                 }
             });
             info.setHeaderContent(header);
