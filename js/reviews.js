@@ -100,21 +100,12 @@ function createReviewForm(bathroomId, onSaved) {
         let bathroom;
 
         try {
-            const response = await fetch(
-                "http://localhost:3001/api/bathrooms/" + bathroomId + "/reviews",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ rating: rating, tags: tags })
-                }
-            );
+            bathroom = await saveReview(bathroomId, rating, tags);
 
-            if (!response.ok) {
+            if (!bathroom) {
                 message.textContent = "Could not save your review. Please try again.";
                 return;
             }
-
-            bathroom = await response.json();
         } catch {
             message.textContent = "Could not save your review. Check your connection and try again.";
             return;
