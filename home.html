@@ -18,27 +18,27 @@
         <aside class="restroom-sidebar">
             <h1>Find a restroom</h1>
             <p>Search names, addresses, and flairs in the visible map area.</p>
-        <label class="sr-only" for="sidebar-search">Search restrooms in the visible map area</label>
-        <input
-            id="sidebar-search"
-            class="sidebar-search"
-            type="search"
-            placeholder="Search this map area..."
-        >
+            <label class="sr-only" for="sidebar-search">Search restrooms in the visible map area</label>
+            <input
+                id="sidebar-search"
+                class="sidebar-search"
+                type="search"
+                placeholder="Search this map area..."
+            >
             <div id="restroom-list"></div>
         </aside>
-<section class="map-panel" aria-label="Restroom map">
-    <div class="map-search">
-        <label class="sr-only" for="map-search">Search restrooms in the visible map area</label>
-        <input
-            id="map-search"
-            type="search"
-            placeholder="Search this map area..."
-        >
-    </div>
+        <section class="map-panel" aria-label="Restroom map">
+            <div class="map-search">
+                <label class="sr-only" for="map-search">Search restrooms in the visible map area</label>
+                <input
+                    id="map-search"
+                    type="search"
+                    placeholder="Search this map area..."
+                >
+            </div>
 
-    <div id="map" class="location-map"></div>
-</section>
+            <div id="map" class="location-map"></div>
+        </section>
     </main>
     <script src="config.local.js"></script>
     <script src="js/api.js"></script>
